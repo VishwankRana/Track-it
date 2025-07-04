@@ -14,11 +14,6 @@ export default function AddTransaction({ setShowAddModal }) {
                     <img src={addIcon} alt="Add" className="w-7 h-7" />
                 </Button>
 
-                <div className="showTransactionParentDiv w-full h-20 border-2 border-red-50">
-
-                </div>
-
-
             </div >
         </>
     )

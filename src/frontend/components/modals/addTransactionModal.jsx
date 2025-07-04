@@ -42,6 +42,9 @@ export default function AddModal({ setShowAddModal }) {
             console.error("❌ Error submitting form:", err.message);
         }
 
+        const [dataSubmitted, setDataSubmitted] = useState()
+
+
 
     };
 

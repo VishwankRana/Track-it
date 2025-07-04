@@ -9,6 +9,7 @@ const __dirname = dirname(__filename)
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  server: { open: '/trackit' },
   resolve: {
     alias: {
       "@": resolve(__dirname, "./src"),
