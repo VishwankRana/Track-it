@@ -1,0 +1,10 @@
+ @import "tailwindcss";
+ @import "tw-animate-css";
+
+ @custom-variant dark (&:is(.dark *));
+
+ body {
+   margin: 0px;
+   padding: 0px;
+   background-color: #1d1c29;
+ }
