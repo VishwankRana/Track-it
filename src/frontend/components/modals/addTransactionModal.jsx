@@ -1,6 +1,7 @@
+import { use } from "react";
 import { useState } from "react";
 
-export default function AddModal({ setShowAddModal }) {
+export default function AddModal({ setShowAddModal, setTransaction }) {
     const [isClosing, setIsClosing] = useState(false);
 
     const handleClose = () => {
@@ -36,19 +37,19 @@ export default function AddModal({ setShowAddModal }) {
             if (!res.ok) throw new Error("Failed to add transaction");
             const data = await res.json();
             console.log("Transaction saved!!", data);
+            setTransaction((prev) => [...prev, data]);
 
-            setIsClosing(false);
+            setIsClosing(true);
+            setTimeout(() => {
+                setShowAddModal(false);
+            }, 300);
         } catch (err) {
             console.error("❌ Error submitting form:", err.message);
         }
 
-        const [dataSubmitted, setDataSubmitted] = useState()
-
 
 
     };
-
-
 
     return (
         <div className="fixed inset-0 bg-[rgba(0,0,0,0.4)] z-50 flex justify-center items-center">
@@ -118,3 +119,4 @@ export default function AddModal({ setShowAddModal }) {
         </div>
     );
 }
+
