@@ -1,5 +1,8 @@
 import { use } from "react";
 import { useState } from "react";
+import BasicDatePicker from '../datepicker'
+import BasicTimePicker from '../timePicker'
+import dayjs from "dayjs";
 
 export default function AddModal({ setShowAddModal, setTransaction }) {
     const [isClosing, setIsClosing] = useState(false);
@@ -15,6 +18,8 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
     const [note, setNote] = useState("");
+    const [date, setDate] = useState(dayjs());
+    const [time, setTime] = useState(dayjs());
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,7 +27,9 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
         const transactionData = {
             title,
             amount: Number(amount),
-            note
+            note,
+            date: date?.toISOString(),
+            time: time?.format("HH:mm"),
         }
 
         try {
@@ -31,7 +38,7 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ title, amount, note })
+                body: JSON.stringify(transactionData)
             });
 
             if (!res.ok) throw new Error("Failed to add transaction");
@@ -60,9 +67,25 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
                         : 'animate-in fade-in-0 zoom-in-95'} 
         duration-300`}
             >
-                <h1 className="text-2xl font-bold mb-6 text-black font-sans">Add a Transaction</h1>
+
+
 
                 <form onSubmit={handleSubmit} className="space-y-4 font-sans">
+
+                    <div className="flex justify-between">
+
+                        <h1 className="text-2xl font-bold mb-6 text-black font-sans">Add a Transaction</h1>
+                        <div>
+                            <BasicTimePicker time={time} setTime={setTime} />
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label htmlFor="transaction-date" className="mb-1 text-sm font-medium text-black">Transaction Date</label>
+                        <BasicDatePicker date={date} setDate={setDate} />
+                    </div>
+
+
                     <div className="flex flex-col">
                         <label htmlFor="transactionTitle" className="mb-1 text-sm font-medium text-black">Title</label>
                         <input
@@ -119,4 +142,3 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
         </div>
     );
 }
-

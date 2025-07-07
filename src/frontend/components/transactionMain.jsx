@@ -1,11 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddTransaction from "./buttons/addTransaction"
 import AddModal from "./modals/addTransactionModal"
+import dayjs from "dayjs";
+
 
 export default function TransactionMain() {
 
     const [showAddModal, setShowAddModal] = useState(false);
     const [transaction, setTransaction] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(dayjs());
+
+    useEffect(() => {
+        const fetchTransactions = async () => {
+            try {
+                const res = await fetch("http://localhost:5000/api/trackit/transactions");
+                const data = await res.json();
+                setTransaction(data);
+            } catch (err) {
+                console.error("❌ Failed to fetch transactions:", err.message);
+            }
+        };
+
+        fetchTransactions();
+    }, []);
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await fetch(`http://localhost:5000/api/trackit/transactions/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (!res.ok) throw new Error("Failed to delete Transaction")
+            setTransaction((prev) => prev.filter((txn) => txn._id !== id))
+        } catch (err) {
+            console.error("❌ Error deleting transaction:", err.message);
+            console.log("🗑️ Deleting transaction with ID:", id);
+        }
+    }
 
     return (
         <div className="flex-1 flex flex-col min-h-screen">
@@ -23,21 +54,17 @@ export default function TransactionMain() {
                     <div>
 
                         {transaction.map((txn, index) => (
-                            <div className="showTransactionParentDiv w-full border-2 border-red-50 mt-5">
-                                <div key={txn._id || index} className="text-white">
+                            <div key={txn._id || index} className="showTransactionParentDiv w-full border-2 border-red-50 mt-5">
+                                <div className="text-white flex justify-between items-center ">
                                     {txn.title} - ₹{txn.amount}
+                                    <div><button onClick={() => handleDelete(txn._id)} className="border-2 bg-red-600 cursor-pointer">Delete</button></div>
                                 </div>
                             </div>
                         ))}
 
                     </div>
                 )}
-
-
-
             </div>
         </div>
     );
 }
-
-

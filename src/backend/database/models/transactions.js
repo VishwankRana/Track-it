@@ -13,6 +13,16 @@ const transactionsSchema = mongoose.Schema({
 
     note: {
         type: String,
+    },
+
+    date: {
+        type: Date,
+        required: true,
+    },
+
+    time: {
+        type: String,
+        required: true
     }
 
 })
