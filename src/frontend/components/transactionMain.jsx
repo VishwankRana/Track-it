@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import AddTransaction from "./buttons/addTransaction"
 import AddModal from "./modals/addTransactionModal"
+import TransactionDetailsTile from "./detailsTile"
 import dayjs from "dayjs";
 
 
@@ -39,6 +40,7 @@ export default function TransactionMain() {
     }
 
     return (
+
         <div className="flex-1 flex flex-col min-h-screen">
             <div className="headerMain flex items-center h-[78px] w-full border-b border-white">
                 <h1 className="text-white ml-5 text-3xl font-serif tracking-[0.1em]">
@@ -50,9 +52,25 @@ export default function TransactionMain() {
                 <div> {showAddModal && <AddModal setShowAddModal={setShowAddModal} setTransaction={setTransaction} />}</div>
 
 
-                {transaction && (
-                    <div>
 
+                <div className="detailsParentDiv">
+                    <div className="detailsDiv flex w-full mt-6 justify-start text-white text-xl font-serif tracking-[0.1em]">
+                        <p className="flex justify-start flex-5 px-2">Title</p>
+                        <p className="flex justify-start flex-5 px-2">Merchant</p>
+                        <p className="flex justify-start flex-5 px-2">Amount</p>
+                        <p className="flex justify-start flex-5 px-2">Date/Time</p>
+                        <p className="flex justify-start flex-5 px-2">Note</p>
+                    </div>
+                </div>
+
+                <TransactionDetailsTile
+                    transaction={transaction}
+                    handleDelete={handleDelete}
+                />
+
+
+                {/* {transaction && (
+                    <div>
                         {transaction.map((txn, index) => (
                             <div key={txn._id || index} className="showTransactionParentDiv w-full border-2 border-red-50 mt-5">
                                 <div className="text-white flex justify-between items-center ">
@@ -63,8 +81,9 @@ export default function TransactionMain() {
                         ))}
 
                     </div>
-                )}
+                )} */}
             </div>
         </div>
     );
+
 }

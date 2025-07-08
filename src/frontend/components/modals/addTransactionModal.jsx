@@ -16,6 +16,7 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
 
 
     const [title, setTitle] = useState("");
+    const [merchant, setMerchant] = useState("");
     const [amount, setAmount] = useState("");
     const [note, setNote] = useState("");
     const [date, setDate] = useState(dayjs());
@@ -26,6 +27,7 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
 
         const transactionData = {
             title,
+            merchant,
             amount: Number(amount),
             note,
             date: date?.toISOString(),
@@ -61,7 +63,7 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
     return (
         <div className="fixed inset-0 bg-[rgba(0,0,0,0.4)] z-50 flex justify-center items-center">
             <div
-                className={`bg-[#b8fc53] w-full max-w-md p-6 rounded-[20px] border-2 border-black 
+                className={`bg-[#b8fc53] w-150 p-6 rounded-[20px] border-2 border-black 
         ${isClosing
                         ? 'animate-out fade-out-0 zoom-out-95'
                         : 'animate-in fade-in-0 zoom-in-95'} 
@@ -98,6 +100,20 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
                             placeholder="e.g., Grocery shopping"
                         />
                     </div>
+
+                    <div className="flex flex-col">
+                        <label htmlFor="transactionMerchant" className="mb-1 text-sm font-medium text-black">Merchant</label>
+                        <input
+                            type="text"
+                            id="transactionMerchant"
+                            value={merchant}
+                            onChange={(e) => setMerchant(e.target.value)}
+                            name="transactionMerchant"
+                            className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                            placeholder="e.g., Vishwank"
+                        />
+                    </div>
+
 
                     <div className="flex flex-col">
                         <label htmlFor="transactionAmount" className="mb-1 text-sm font-medium text-black">Amount</label>
