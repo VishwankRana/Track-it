@@ -67,21 +67,6 @@ export default function TransactionMain() {
                     transaction={transaction}
                     handleDelete={handleDelete}
                 />
-
-
-                {/* {transaction && (
-                    <div>
-                        {transaction.map((txn, index) => (
-                            <div key={txn._id || index} className="showTransactionParentDiv w-full border-2 border-red-50 mt-5">
-                                <div className="text-white flex justify-between items-center ">
-                                    {txn.title} - ₹{txn.amount}
-                                    <div><button onClick={() => handleDelete(txn._id)} className="border-2 bg-red-600 cursor-pointer">Delete</button></div>
-                                </div>
-                            </div>
-                        ))}
-
-                    </div>
-                )} */}
             </div>
         </div>
     );
