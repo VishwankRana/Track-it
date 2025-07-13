@@ -1,66 +1,53 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BasicDatePicker from '../datepicker'
 import BasicTimePicker from '../timePicker'
-import dayjs from "dayjs";
 
-export default function AddModal({ setShowAddModal, setTransaction }) {
+export default function EditTransactionModal({ transaction, handleEdit, setShowEditModal }) {
+    const [title, setTitle] = useState("");
+    const [merchant, setMerchant] = useState("");
+    const [amount, setAmount] = useState("");
+    const [note, setNote] = useState("");
+    const [date, setDate] = useState("");
+    const [time, setTime] = useState("");
+
     const [isClosing, setIsClosing] = useState(false);
 
     const handleClose = () => {
         setIsClosing(true);
         setTimeout(() => {
-            setShowAddModal(false);
+            setShowEditModal(false);
         }, 300);
     };
 
+    // Pre-fill input fields when modal opens or transaction changes
+    useEffect(() => {
+        if (transaction) {
+            setTitle(transaction.title || "");
+            setMerchant(transaction.merchant || "");
+            setAmount(transaction.amount || "");
+            setNote(transaction.note || "");
+            setDate(transaction.date?.substring(0, 10) || "");
+            setTime(transaction.time || "");
+        }
+    }, [transaction]);
 
-    const [title, setTitle] = useState("");
-    const [merchant, setMerchant] = useState("");
-    const [amount, setAmount] = useState("");
-    const [note, setNote] = useState("");
-    const [date, setDate] = useState(dayjs());
-    const [time, setTime] = useState(dayjs());
-
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        const transactionData = {
+        const updatedTxn = {
             title,
             merchant,
-            amount: Number(amount),
+            amount,
             note,
-            date: date?.toISOString(),
-            time: time?.format("HH:mm"),
-        }
+            date,
+            time,
+        };
 
-        try {
-            const res = await fetch("http://localhost:5000/api/trackit/transactions", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(transactionData)
-            });
-
-            if (!res.ok) throw new Error("Failed to add transaction");
-            const data = await res.json();
-            console.log("Transaction saved!!", data);
-            setTransaction((prev) => [...prev, data]);
-
-            setIsClosing(true);
-            setTimeout(() => {
-                setShowAddModal(false);
-            }, 300);
-        } catch (err) {
-            console.error("❌ Error submitting form:", err.message);
-        }
-
-
-
+        handleEdit(transaction._id, updatedTxn);
     };
 
     return (
-        <div className="fixed inset-0 bg-[rgba(0,0,0,0.4)] z-50 flex justify-center items-center">
+        <div className="modalDiv fixed inset-0 bg-[rgba(0,0,0,0.4)] z-50 flex justify-center items-center">
             <div
                 className={`bg-[#b8fc53] w-150 p-6 rounded-[20px] border-2 border-black 
         ${isClosing
@@ -71,11 +58,11 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
 
 
 
-                <form onSubmit={handleSubmit} className="space-y-4 font-sans">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
                     <div className="flex justify-between">
 
-                        <h1 className="text-2xl font-bold mb-6 text-black font-sans">Add a Transaction</h1>
+                        <h1 className="text-2xl font-bold mb-6 text-black font-sans">Edit a Transaction</h1>
                         <div>
                             <BasicTimePicker time={time} setTime={setTime} />
                         </div>
@@ -86,30 +73,27 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
                         <BasicDatePicker date={date} setDate={setDate} />
                     </div>
 
-
                     <div className="flex flex-col">
                         <label htmlFor="transactionTitle" className="mb-1 text-sm font-medium text-black">Title</label>
                         <input
-                            type="text"
-                            id="transactionTitle"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            name="transactionTitle"
+                            placeholder="Title"
                             className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-                            placeholder="e.g., Grocery shopping"
+
+                            required
                         />
                     </div>
 
                     <div className="flex flex-col">
                         <label htmlFor="transactionMerchant" className="mb-1 text-sm font-medium text-black">Merchant</label>
                         <input
-                            type="text"
-                            id="transactionMerchant"
                             value={merchant}
                             onChange={(e) => setMerchant(e.target.value)}
-                            name="transactionMerchant"
+                            placeholder="Merchant"
                             className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-                            placeholder="e.g., Vishwank"
+
+                            required
                         />
                     </div>
 
@@ -117,13 +101,13 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
                     <div className="flex flex-col">
                         <label htmlFor="transactionAmount" className="mb-1 text-sm font-medium text-black">Amount</label>
                         <input
-                            type="number"
-                            id="transactionAmount"
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
-                            name="transactionAmount"
+                            type="number"
+                            placeholder="Amount"
                             className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-                            placeholder="₹1000"
+
+                            required
                         />
                     </div>
 
@@ -131,29 +115,31 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
                         <label htmlFor="transactionNote" className="mb-1 text-sm font-medium text-black">Note</label>
                         <input
                             type="text"
-                            id="transactionNote"
-                            name="transactionNote"
                             value={note}
                             onChange={(e) => setNote(e.target.value)}
+                            placeholder="Note"
                             className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-                            placeholder="Leave a Note"
                         />
                     </div>
+                    <div className="flex justify-end gap-2">
 
-                    <div className="mt-4 flex flex-row justify-end">
                         <button type="submit" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 cursor-pointer">
-                            Submit
+                            Save
                         </button>
+
+
                         <button
                             type="button"
+                            // onClick={() => setShowEditModal(false)}
                             onClick={handleClose}
                             className="bg-red-500 ml-2 text-black px-4 py-2 rounded hover:bg-red-600"
                         >
                             Cancel
                         </button>
+
                     </div>
                 </form>
             </div>
-        </div>
+        </div >
     );
 }
