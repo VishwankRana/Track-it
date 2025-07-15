@@ -2,13 +2,9 @@ import Button from '@mui/material/Button';
 import dayjs from "dayjs";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { useState } from "react";
-
-
 
 export default function TransactionDetailsTile({ transaction, handleDelete, handleEdit, setShowEditModal,
     setSelectedTransaction }) {
-
 
     return (
         <>

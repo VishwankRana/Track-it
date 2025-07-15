@@ -6,15 +6,15 @@ import dayjs from 'dayjs';
 
 
 export default function BasicDatePicker({ date, setDate }) {
-    const [selectedDate, setSelectedDate] = React.useState(dayjs());
-    const today = dayjs().format("YYYY-MM-DD");
-
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-                value={selectedDate}
-                onChange={(newValue) => setSelectedDate(newValue)}
-
+                value={dayjs(date)}
+                onChange={(newValue) => {
+                    if (newValue) {
+                        setDate(newValue.format('YYYY-MM-DD'));
+                    }
+                }}
                 slotProps={{
                     textField: {
                         id: "transaction-date",

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import addIcon from "@/assets/add_box.png"
-import React from "react";
+
 
 export default function AddTransaction({ setShowAddModal }) {
     return (
