@@ -5,6 +5,8 @@ import TransactionDetailsTile from "./detailsTile";
 import EditTransactionModal from "./modals/editTransactionsModal";
 import BasicMonthSelect from "./monthPicker";
 import dayjs from "dayjs";
+import Sidebar from './sidebar';
+
 
 export default function TransactionMain() {
     const [showAddModal, setShowAddModal] = useState(false);
@@ -69,10 +71,12 @@ export default function TransactionMain() {
 
     return (
         <div className="flex-1 flex flex-col min-h-screen">
+            <Sidebar />
+
             <div className="headerMain flex items-center h-[78px] w-full border-b border-white">
+
                 <h1 className="text-white ml-5 text-3xl font-serif tracking-[0.1em]">Transactions</h1>
             </div>
-
             <div className="mainContent flex-1 w-full overflow-auto p-5">
                 <div>
                     <AddTransaction setShowAddModal={setShowAddModal} />

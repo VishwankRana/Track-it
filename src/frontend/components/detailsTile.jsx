@@ -21,7 +21,7 @@ export default function TransactionDetailsTile({ transaction, handleDelete, hand
                             <div className="noteP w-[380px] flex justify-start px-2 items-center text-[#110e1b] text-xl font-sans">{txn.note}</div>
                             <div>
 
-                                <div className='deleteBtnDiv m-[0px] p-[0px] w-51  flex justify-end items-center h-full px-2 py-2 flex-row'>
+                                <div className='deleteBtnDiv m-[0px] p-[0px] w-112 flex justify-end items-center h-full px-2 py-2 flex-row'>
                                     <Button variant="contained"
                                         onClick={() => handleDelete(txn._id)}
                                         sx={{

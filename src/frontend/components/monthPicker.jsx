@@ -36,7 +36,7 @@ export default function BasicMonthSelect({ setSelectedMonth }) {
                         '&:before': { borderBottom: 'none' },
                         '&:after': { borderBottom: 'none' },
                         '& .MuiSelect-select': {
-                            color: 'red',
+                            color: 'white',
                         }
                     }}
                 >
