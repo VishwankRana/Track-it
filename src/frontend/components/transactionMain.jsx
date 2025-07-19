@@ -5,7 +5,7 @@ import TransactionDetailsTile from "./detailsTile";
 import EditTransactionModal from "./modals/editTransactionsModal";
 import BasicMonthSelect from "./monthPicker";
 import dayjs from "dayjs";
-import Sidebar from './sidebar';
+import Navbar from './navbar';
 
 
 export default function TransactionMain() {
@@ -71,7 +71,7 @@ export default function TransactionMain() {
 
     return (
         <div className="flex-1 flex flex-col min-h-screen">
-            <Sidebar />
+            <Navbar />
 
             <div className="headerMain flex items-center h-[78px] w-full border-b border-white">
 
@@ -100,9 +100,9 @@ export default function TransactionMain() {
                 <div className="detailsParentDiv">
                     <div className="detailsDiv flex w-full mt-6 justify-start text-white text-xl font-serif tracking-[0.1em]">
                         <p className="w-[160px] flex justify-center px-2">Title</p>
-                        <p className="w-[160px] flex justify-center px-2">Merchant</p>
-                        <p className="w-[120px] flex justify-center px-2">Amount</p>
-                        <p className="w-[214px] flex justify-center px-2">Date/Time</p>
+                        <p className="w-[160px] flex justify-center px-2 ml-10">Merchant</p>
+                        <p className="w-[120px] flex justify-center px-2 ml-8">Amount</p>
+                        <p className="w-[214px] flex justify-center px-2 ml-3">Date/Time</p>
                         <p className="w-[380px] flex justify-center px-2">Note</p>
                     </div>
 

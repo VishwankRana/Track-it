@@ -28,6 +28,11 @@ const transactionsSchema = mongoose.Schema({
     time: {
         type: String,
         required: true
+    },
+
+    category: {
+        type: String,
+        required: true
     }
 
 })

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './frontend/components/homePage';
 import TransactionMain from './frontend/components/transactionMain';
 import Layout from './frontend/components/layout';
-import AddTransaction from './frontend/components/buttons/addTransaction';
+import TrackitDashboard from './frontend/components/dashboard'
 
 export default function App() {
     return (
@@ -13,6 +13,7 @@ export default function App() {
 
                 <Route element={<Layout />}>
                     <Route path="/trackit/transactions" element={<TransactionMain />} />
+                    <Route path='/trackit/dashboard' element={<TrackitDashboard />} />
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BasicDatePicker from '../datepicker'
 import BasicTimePicker from '../timePicker'
+import CategorySelectIndicator from '../CategorySelector'
 import dayjs from "dayjs";
 
 export default function AddModal({ setShowAddModal, setTransaction }) {
@@ -20,6 +21,7 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
     const [note, setNote] = useState("");
     const [date, setDate] = useState(dayjs());
     const [time, setTime] = useState(dayjs());
+    const [category, setCategory] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,6 +33,7 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
             note,
             date: date?.toISOString(),
             time: time?.format("HH:mm"),
+            category,
         }
 
         try {
@@ -63,10 +66,10 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
         <div className="fixed inset-0 bg-[rgba(0,0,0,0.4)] z-50 flex justify-center items-center">
             <div
                 className={`bg-[#b8fc53] w-150 p-6 rounded-[20px] border-2 border-black 
-        ${isClosing
+                    ${isClosing
                         ? 'animate-out fade-out-0 zoom-out-95'
                         : 'animate-in fade-in-0 zoom-in-95'} 
-        duration-300`}
+                    duration-300`}
             >
 
 
@@ -76,6 +79,12 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
                     <div className="flex justify-between">
 
                         <h1 className="text-2xl font-bold mb-6 text-black font-sans">Add a Transaction</h1>
+
+                        <div className="CategoryDiv h-[36.4px]">
+                            <CategorySelectIndicator category={category} setCategory={setCategory} />
+                        </div>
+
+
                         <div>
                             <BasicTimePicker time={time} setTime={setTime} />
                         </div>
