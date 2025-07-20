@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import BasicDatePicker from '../datepicker'
 import BasicTimePicker from '../timePicker'
+import CategorySelectIndicator from '../CategorySelector'
 
 export default function EditTransactionModal({ transaction, handleEdit, setShowEditModal }) {
     const [title, setTitle] = useState("");
@@ -9,6 +10,7 @@ export default function EditTransactionModal({ transaction, handleEdit, setShowE
     const [note, setNote] = useState("");
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
+    const [category, setCategory] = useState("");
 
     const [isClosing, setIsClosing] = useState(false);
 
@@ -28,6 +30,7 @@ export default function EditTransactionModal({ transaction, handleEdit, setShowE
             setNote(transaction.note || "");
             setDate(transaction.date?.substring(0, 10) || "");
             setTime(transaction.time || "");
+            setCategory(transaction.category || "");
         }
     }, [transaction]);
 
@@ -41,6 +44,7 @@ export default function EditTransactionModal({ transaction, handleEdit, setShowE
             note,
             date,
             time,
+            category
         };
 
         handleEdit(transaction._id, updatedTxn);
@@ -50,19 +54,23 @@ export default function EditTransactionModal({ transaction, handleEdit, setShowE
         <div className="modalDiv fixed inset-0 bg-[rgba(0,0,0,0.4)] z-50 flex justify-center items-center">
             <div
                 className={`bg-[#b8fc53] w-150 p-6 rounded-[20px] border-2 border-black 
-        ${isClosing
+                    ${isClosing
                         ? 'animate-out fade-out-0 zoom-out-95'
                         : 'animate-in fade-in-0 zoom-in-95'} 
-        duration-300`}
+                        duration-300`}
             >
-
-
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
                     <div className="flex justify-between">
 
                         <h1 className="text-2xl font-bold mb-6 text-black font-sans">Edit a Transaction</h1>
+
+                        <div className="CategoryDiv h-[36.4px]">
+                            <CategorySelectIndicator category={category} setCategory={setCategory} />
+                        </div>
+
+
                         <div>
                             <BasicTimePicker time={time} setTime={setTime} />
                         </div>
@@ -92,7 +100,6 @@ export default function EditTransactionModal({ transaction, handleEdit, setShowE
                             onChange={(e) => setMerchant(e.target.value)}
                             placeholder="Merchant"
                             className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-
                             required
                         />
                     </div>

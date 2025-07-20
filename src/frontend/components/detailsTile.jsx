@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import dayjs from "dayjs";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import CategoryTypeUI from "./CategoryType";
 
 export default function TransactionDetailsTile({ transaction, handleDelete, handleEdit, setShowEditModal,
     setSelectedTransaction }) {
@@ -11,7 +12,7 @@ export default function TransactionDetailsTile({ transaction, handleDelete, hand
             {transaction && (
                 <div className="TransactionDetailsTileParentDiv">
                     {transaction.map((txn, index) => (
-                        <div key={txn._id || index} className="TransactionDetailsTileDiv flex w-full bg-[#b8fc53] mt-5 min-h-15 rounded-2xl shadow-2xl justify-between">
+                        <div key={txn._id || index} className="TransactionDetailsTileDiv flex w-full bg-[#b8fc53] mt-5 min-h-15 rounded-2xl shadow-2xl justify-between items-center">
                             <div className="titleP w-[160px] flex justify-center px-2 items-center text-[#110e1b] text-xl font-mono ">{txn.title}</div>
                             <div className="merchantP w-[160px] flex justify-center px-2 items-center text-[#110e1b] text-xl font-mono ">{txn.merchant}</div>
                             <div className="amountP w-[120px] flex justify-center px-2 items-center text-[#110e1b] text-xl font-mono ">₹{txn.amount}</div>
@@ -19,9 +20,10 @@ export default function TransactionDetailsTile({ transaction, handleDelete, hand
                                 {txn.date ? dayjs(txn.date).format("DD-MM-YYYY") : "No Date"} ({txn.time})
                             </div>
                             <div className="noteP w-[380px] flex justify-start px-2 items-center text-[#110e1b] text-xl font-sans">{txn.note}</div>
-                            <div className='TransactionCategoryTypeDiv flex items-center'>Category</div>
 
-
+                            <div className="w-[100px] flex justify-center items-center">
+                                {txn.category && <CategoryTypeUI category={txn.category} />}
+                            </div>
 
                             <div>
 

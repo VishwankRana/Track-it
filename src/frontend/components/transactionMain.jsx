@@ -35,7 +35,7 @@ export default function TransactionMain() {
                 method: "DELETE",
             });
 
-            if (!res.ok) throw new Error("Failed to delete Transaction");
+            if (!res.ok) throw new Error("Failed to delete Transaction"); ""
             setTransaction((prev) => prev.filter((txn) => txn._id !== id));
         } catch (err) {
             console.error("❌ Error deleting transaction:", err.message);

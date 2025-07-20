@@ -24,7 +24,7 @@ export default function CategorySelectIndicator({ category, setCategory }) {
             <Option value="Rent">Rent</Option>
             <Option value="Shopping">Shopping</Option>
             <Option value="Healthcare">Healthcare</Option>
-            <Option value="Entertainment">Entertainment</Option>
+            <Option value="Entertainment">Ent   ertainment</Option>
             <Option value="Travel">Travel</Option>
             <Option value="Gym">Gym</Option>
             <Option value="Other">Other</Option>
