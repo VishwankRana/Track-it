@@ -9,7 +9,7 @@ export default function NavDashboardBtn() {
         <div className="flex flex-wrap items-center gap-2 md:flex-row">
             <Button
                 variant="outline"
-                className="bg-[#b8fc53] hover:bg-[#b8fc53bc] w-62 cursor-pointer text-lg text-black"
+                className="bg-white hover:bg-[#b8fc53bc] w-62 cursor-pointer text-lg text-black"
                 onClick={() => dashboardNavigate('/trackit/dashboard')}>Dashboard</Button>
         </div >
     )

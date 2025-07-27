@@ -31,7 +31,7 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
             merchant,
             amount: Number(amount),
             note,
-            date: date?.toISOString(),
+            date: date?.toDate().toISOString(),
             time: time?.format("HH:mm"),
             category,
         }
@@ -104,7 +104,7 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             name="transactionTitle"
-                            className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                            className="bg-white text-black border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                             placeholder="e.g., Grocery shopping"
                         />
                     </div>
@@ -117,7 +117,7 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
                             value={merchant}
                             onChange={(e) => setMerchant(e.target.value)}
                             name="transactionMerchant"
-                            className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                            className="bg-white text-black border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                             placeholder="e.g., Vishwank"
                         />
                     </div>
@@ -131,7 +131,7 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
                             name="transactionAmount"
-                            className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                            className="bg-white text-black border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                             placeholder="₹1000"
                         />
                     </div>
@@ -144,7 +144,7 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
                             name="transactionNote"
                             value={note}
                             onChange={(e) => setNote(e.target.value)}
-                            className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                            className="bg-white text-black border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                             placeholder="Leave a Note"
                         />
                     </div>

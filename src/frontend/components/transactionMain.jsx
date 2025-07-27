@@ -6,7 +6,7 @@ import EditTransactionModal from "./modals/editTransactionsModal";
 import BasicMonthSelect from "./monthPicker";
 import dayjs from "dayjs";
 import Navbar from './navbar';
-
+import FilterButton from './FilterComponent';
 
 export default function TransactionMain() {
     const [showAddModal, setShowAddModal] = useState(false);
@@ -14,6 +14,7 @@ export default function TransactionMain() {
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [selectedMonth, setSelectedMonth] = useState(dayjs().month());
+    const [selectedCategories, setSelectedCategories] = useState([]); // now an array
 
     useEffect(() => {
         const fetchTransactions = async () => {
@@ -25,7 +26,6 @@ export default function TransactionMain() {
                 console.error("❌ Failed to fetch transactions:", err.message);
             }
         };
-
         fetchTransactions();
     }, []);
 
@@ -34,8 +34,7 @@ export default function TransactionMain() {
             const res = await fetch(`http://localhost:5000/api/trackit/transactions/${id}`, {
                 method: "DELETE",
             });
-
-            if (!res.ok) throw new Error("Failed to delete Transaction"); ""
+            if (!res.ok) throw new Error("Failed to delete Transaction");
             setTransaction((prev) => prev.filter((txn) => txn._id !== id));
         } catch (err) {
             console.error("❌ Error deleting transaction:", err.message);
@@ -49,10 +48,8 @@ export default function TransactionMain() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedData),
             });
-
             if (!res.ok) throw new Error("Failed to update Transaction");
             const updatedTxn = await res.json();
-
             setTransaction((prev) =>
                 prev.map((txn) => (txn._id === id ? updatedTxn : txn))
             );
@@ -62,30 +59,43 @@ export default function TransactionMain() {
         }
     };
 
+    const handleCategoryFilter = (category) => {
+        setSelectedCategories((prev) => {
+            if (prev.includes(category)) {
+                return prev.filter((c) => c !== category); // remove if already selected
+            } else {
+                return [...prev, category]; // add to selection
+            }
+        });
+    };
 
-    const filteredTransactions = transaction.filter(
-        (txn) => dayjs(txn.date).month() === selectedMonth
-    );
+    const filteredTransactions = transaction.filter((txn) => {
+        const matchMonth = dayjs(txn.date).month() === selectedMonth;
+        const matchCategory = selectedCategories.length === 0 || selectedCategories.includes(txn.category);
+        return matchMonth && matchCategory;
+    });
 
     const totalExpense = filteredTransactions.reduce((acc, txn) => acc + Number(txn.amount), 0);
 
     return (
         <div className="flex-1 flex flex-col min-h-screen">
             <Navbar />
-
             <div className="headerMain flex items-center h-[78px] w-full border-b border-white">
-
                 <h1 className="text-white ml-5 text-3xl font-serif tracking-[0.1em]">Transactions</h1>
             </div>
+
             <div className="mainContent flex-1 w-full overflow-auto p-5">
-                <div>
+                <div className="flex justify-between w-ful">
                     <AddTransaction setShowAddModal={setShowAddModal} />
+                    <FilterButton
+                        handleCategoryFilter={handleCategoryFilter}
+                        selectedCategories={selectedCategories}
+                    />
                 </div>
 
                 <div className="monthlyOverViewDiv flex items-center justify-between px-5">
                     <BasicMonthSelect setSelectedMonth={setSelectedMonth} />
-
-                    <div className='overallSpendDiv text-red-500 text-[40px] font-mono'>
+                    <div className='overallSpendDiv flex justify-center items-center text-red-500 text-[40px] font-mono bg-[rgba(255,0,0,0.23)] h-15 w-auto p-3 border-2 border-red-500 rounded-2xl'>
                         -{totalExpense}
                     </div>
                 </div>
@@ -120,7 +130,6 @@ export default function TransactionMain() {
                             </p>
                         </div>
                     )}
-
                 </div>
             </div>
 

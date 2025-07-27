@@ -87,7 +87,7 @@ export default function EditTransactionModal({ transaction, handleEdit, setShowE
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder="Title"
-                            className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                            className="bg-white text-black border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
 
                             required
                         />
@@ -99,7 +99,7 @@ export default function EditTransactionModal({ transaction, handleEdit, setShowE
                             value={merchant}
                             onChange={(e) => setMerchant(e.target.value)}
                             placeholder="Merchant"
-                            className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                            className="bg-white text-black border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                             required
                         />
                     </div>
@@ -112,7 +112,7 @@ export default function EditTransactionModal({ transaction, handleEdit, setShowE
                             onChange={(e) => setAmount(e.target.value)}
                             type="number"
                             placeholder="Amount"
-                            className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                            className="bg-white text-black border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
 
                             required
                         />
@@ -125,7 +125,7 @@ export default function EditTransactionModal({ transaction, handleEdit, setShowE
                             value={note}
                             onChange={(e) => setNote(e.target.value)}
                             placeholder="Note"
-                            className="bg-white border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                            className="bg-white text-black border border-black rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                         />
                     </div>
                     <div className="flex justify-end gap-2">
