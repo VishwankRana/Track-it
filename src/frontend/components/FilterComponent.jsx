@@ -1,12 +1,13 @@
 import "cally";
 
-export default function FilterButton({ handleCategoryFilter }) {
+export default function FilterButton({ handleCategoryFilter, ClearCategoryFilter, selectedCategories }) {
     const categories = [
         "Food", "Groceries", "Rent", "Shopping",
         "Healthcare", "Entertainment", "Travel", "Gym", "Other"
     ];
 
     return (
+
         <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn m-1 bg-white text-black">Filter</div>
 
@@ -20,13 +21,24 @@ export default function FilterButton({ handleCategoryFilter }) {
                                 <input
                                     type="checkbox"
                                     className="checkbox flex checkbox-sm"
-                                    onChange={(e) => handleCategoryFilter(category, e.target.checked)}
+                                    checked={selectedCategories.includes(category)}
+                                    onChange={() => handleCategoryFilter(category)}
                                 />
                                 <span className="text-sm">{category}</span>
+
                             </li>
                         ))}
+                        <div className="clearBtnDiv flex justify-end m-2">
+                            <button
+                                className="btn btn-sm bg-red-700"
+                                onClick={ClearCategoryFilter}
+                            >
+                                Clear
+                            </button>
+                        </div>
                     </ul>
                 </li>
+
 
                 {/* Date Filter */}
                 <li className="dropdown dropdown-left">
@@ -45,5 +57,6 @@ export default function FilterButton({ handleCategoryFilter }) {
                 </li>
             </ul>
         </div>
+
     );
 }

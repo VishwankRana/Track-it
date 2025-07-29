@@ -14,7 +14,7 @@ export default function TransactionMain() {
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [selectedMonth, setSelectedMonth] = useState(dayjs().month());
-    const [selectedCategories, setSelectedCategories] = useState([]); // now an array
+    const [selectedCategories, setSelectedCategories] = useState([]);
 
     useEffect(() => {
         const fetchTransactions = async () => {
@@ -62,11 +62,15 @@ export default function TransactionMain() {
     const handleCategoryFilter = (category) => {
         setSelectedCategories((prev) => {
             if (prev.includes(category)) {
-                return prev.filter((c) => c !== category); // remove if already selected
+                return prev.filter((c) => c !== category);
             } else {
-                return [...prev, category]; // add to selection
+                return [...prev, category];
             }
         });
+    };
+
+    const ClearCategoryFilter = () => {
+        setSelectedCategories([]);
     };
 
     const filteredTransactions = transaction.filter((txn) => {
@@ -90,6 +94,7 @@ export default function TransactionMain() {
                     <FilterButton
                         handleCategoryFilter={handleCategoryFilter}
                         selectedCategories={selectedCategories}
+                        ClearCategoryFilter={ClearCategoryFilter}
                     />
                 </div>
 
