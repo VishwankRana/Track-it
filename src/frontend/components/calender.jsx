@@ -51,22 +51,8 @@ export default function DateRangePicker({ onApply }) {
 
     return (
         <div>
-            <button
-                popoverTarget="rdp-popover"
-                className="input input-bordered"
-                style={{ anchorName: "--rdp" }}
-            >
-                {tempRange?.from && tempRange?.to
-                    ? `${tempRange.from.toLocaleDateString()} - ${tempRange.to.toLocaleDateString()}`
-                    : "Pick a date range"}
-            </button>
 
-            <div
-                popover="auto"
-                id="rdp-popover"
-                className="dropdown"
-                style={{ positionAnchor: "--rdp" }}
-            >
+            <div>
                 <div className="bg-gray-800 rounded-xl p-4 shadow-lg">
                     <DayPicker
                         mode="range"
@@ -77,7 +63,12 @@ export default function DateRangePicker({ onApply }) {
                     <div className="flex justify-end mt-3 gap-2">
                         <button
                             className="btn btn-sm btn-outline"
-                            onClick={() => setTempRange(undefined)}
+                            onClick={() => {
+                                setTempRange(undefined);
+                                if (typeof onApply === "function") {
+                                    onApply(undefined);
+                                }
+                            }}
                         >
                             Clear
                         </button>
