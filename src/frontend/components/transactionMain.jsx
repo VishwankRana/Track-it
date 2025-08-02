@@ -7,6 +7,7 @@ import BasicMonthSelect from "./monthPicker";
 import dayjs from "dayjs";
 import Navbar from './navbar';
 import FilterButton from './FilterComponent';
+import DateRangePicker from "./calender";
 
 export default function TransactionMain() {
     const [showAddModal, setShowAddModal] = useState(false);
@@ -15,6 +16,9 @@ export default function TransactionMain() {
     const [selectedTransaction, setSelectedTransaction] = useState(null);
     const [selectedMonth, setSelectedMonth] = useState(dayjs().month());
     const [selectedCategories, setSelectedCategories] = useState([]);
+    // const [selectedDate, setSelectedDate] = useState(dayjs().date());
+    const [dateRange, setDateRange] = useState();
+
 
     useEffect(() => {
         const fetchTransactions = async () => {
@@ -73,10 +77,27 @@ export default function TransactionMain() {
         setSelectedCategories([]);
     };
 
+    // const handleDateFilter = (transaction) => {
+    //     setTransaction((prev) => prev.map())
+    // }
+
+    // const filteredTransactions = transaction.filter((txn) => {
+    //     const matchMonth = dayjs(txn.date).month() === selectedMonth;
+    //     const matchCategory = selectedCategories.length === 0 || selectedCategories.includes(txn.category);
+    //     return matchMonth && matchCategory;
+    // });
+
     const filteredTransactions = transaction.filter((txn) => {
+        const txnDate = dayjs(txn.date);
         const matchMonth = dayjs(txn.date).month() === selectedMonth;
         const matchCategory = selectedCategories.length === 0 || selectedCategories.includes(txn.category);
-        return matchMonth && matchCategory;
+
+        const matchDateRange =
+            !dateRange?.from || !dateRange?.to ||
+            (txnDate.isAfter(dayjs(dateRange.from).subtract(1, 'day')) &&
+                txnDate.isBefore(dayjs(dateRange.to).add(1, 'day')));
+
+        return matchMonth && matchCategory && matchDateRange;
     });
 
     const totalExpense = filteredTransactions.reduce((acc, txn) => acc + Number(txn.amount), 0);
@@ -95,6 +116,8 @@ export default function TransactionMain() {
                         handleCategoryFilter={handleCategoryFilter}
                         selectedCategories={selectedCategories}
                         ClearCategoryFilter={ClearCategoryFilter}
+                        dateRange={dateRange}
+                        setDateRange={setDateRange}
                     />
                 </div>
 

@@ -1,6 +1,8 @@
 import "cally";
+// import Calender from "./calender";
+import DateRangePicker from "./calender"
 
-export default function FilterButton({ handleCategoryFilter, ClearCategoryFilter, selectedCategories }) {
+export default function FilterButton({ handleCategoryFilter, ClearCategoryFilter, selectedCategories, dateRange, setDateRange, onApply }) {
     const categories = [
         "Food", "Groceries", "Rent", "Shopping",
         "Healthcare", "Entertainment", "Travel", "Gym", "Other"
@@ -44,15 +46,7 @@ export default function FilterButton({ handleCategoryFilter, ClearCategoryFilter
                 <li className="dropdown dropdown-left">
                     <div tabIndex={0} role="button" className="btn w-full">Date</div>
                     <ul tabIndex={0} className="dropdown-content menu h-auto w-auto mr-1">
-                        <calendar-date class="cally bg-base-100 border border-base-300 shadow-lg rounded-box">
-                            <svg aria-label="Previous" className="fill-current size-4" slot="previous" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                            </svg>
-                            <svg aria-label="Next" className="fill-current size-4" slot="next" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                            </svg>
-                            <calendar-month></calendar-month>
-                        </calendar-date>
+                        <DateRangePicker onApply={setDateRange} />
                     </ul>
                 </li>
             </ul>

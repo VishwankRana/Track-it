@@ -31,7 +31,7 @@ export default function AddModal({ setShowAddModal, setTransaction }) {
             merchant,
             amount: Number(amount),
             note,
-            date: date?.toDate().toISOString(),
+            date: dayjs(date).toDate().toISOString(),
             time: time?.format("HH:mm"),
             category,
         }
